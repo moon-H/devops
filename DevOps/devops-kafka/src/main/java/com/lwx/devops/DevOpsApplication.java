@@ -1,4 +1,4 @@
-package com.devops.study.DevOps;
+package com.lwx.devops;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
