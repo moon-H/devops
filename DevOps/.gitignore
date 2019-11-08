@@ -1,0 +1,30 @@
+/.metadata/*
+/.metadata/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+/its-modules/its-test/catalina.base_IS_UNDEFINED/logs/*.log
+/its-modules/its-app/logs/*.log
+/itp-tvm-app/logs/*.log
+/catalina.base_IS_UNDEFINED/
