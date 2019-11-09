@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] [%-5level] %message %logger [RID:%X{RID}] [TID:%X{TID}] [MID:%X{MID}]%n"/>
+    <property name="FILE_LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] [%-5level] %message %logger [RID:%X{RID}] [TID:%X{TID}] [MID:%X{MID}]%n"/>
+    
+    <springProfile name="dev,test,lab">
+   		<substitutionProperty name="logbase" value="/usr/local/s6-user/logs/" />
+     </springProfile>
+     <springProfile name="prod">
+   		<substitutionProperty name="logbase" value="/usr/local/s6-user/logs/" />
+   		<!--<substitutionProperty name="logbase" value="/opt/prod/M1/logs/" />-->
+     </springProfile>
+    <!-- 时间戳：
+            这个时间戳可以作为每日日志的名称 -->
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd"/>
+    
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+            <!--must set to GBK under windows-->
+        </encoder>
+    </appender>
+
+    <appender name="BUSINESS-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <!-- 按照时间来 -->
+        <file>${logbase}user_server.log</file>
+        <!--日志文件输出的文件名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        	<FileNamePattern>${logbase}user_server.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+        <append>true</append>
+
+    </appender>
+    <logger name="org.springframework.scheduling" additivity="false">
+		   <level value="INFO" />
+	</logger>
+	
+     <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+    <springProfile name="dev,test,lab">
+	  	<logger name="com.panchan" additivity="false">
+		    <level value="DEBUG" />
+		    <appender-ref ref="CONSOLE" />
+			<appender-ref ref="BUSINESS-FILE" />
+		  </logger>
+    	 <logger name="org.springframework.kafka" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+          <logger name="org.apache.kafka" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+          <logger name="io.lettuce.core.protocol" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+	     <!-- SQL Log -->
+		 <logger name="java.sql.Connection" additivity="false">
+		    <level value="DEBUG" /> 
+		       <appender-ref ref="CONSOLE" /> 
+			   <appender-ref ref="BUSINESS-FILE" />
+		 </logger>
+	    <root level="DEBUG">
+	        <appender-ref ref="CONSOLE"/>
+	        <appender-ref ref="BUSINESS-FILE"/>
+	    </root>
+    </springProfile>
+     <!-- 生产环境. -->
+    <springProfile name="prod">
+	  	<logger name="com.panchan" additivity="false">
+		    <level value="Info" />
+		    <appender-ref ref="CONSOLE" />
+			<appender-ref ref="BUSINESS-FILE" />
+		  </logger>
+    	<logger name="org.springframework.kafka" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+          <logger name="org.apache.kafka" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+          <logger name="io.lettuce.core.protocol" additivity="false">
+            <level value="info" />
+            <appender-ref ref="CONSOLE" />
+                <appender-ref ref="BUSINESS-FILE" />
+          </logger>
+	     <!-- SQL Log -->
+		 <logger name="java.sql.Connection" additivity="false">
+		    <level value="INFO" /> 
+		       <appender-ref ref="CONSOLE" /> 
+			   <appender-ref ref="BUSINESS-FILE" />
+		 </logger>
+	    <root level="INFO">
+	        <appender-ref ref="CONSOLE"/>
+	        <appender-ref ref="BUSINESS-FILE"/>
+	    </root>
+    </springProfile>
+
+</configuration>

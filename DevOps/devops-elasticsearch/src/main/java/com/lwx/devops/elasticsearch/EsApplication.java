@@ -1,4 +1,4 @@
-package com.lwx.devops;
+package com.lwx.devops.elasticsearch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +8,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class DevOpsApplication {
+public class EsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DevOpsApplication.class, args);
+        SpringApplication.run(EsApplication.class, args);
     }
 
 }
