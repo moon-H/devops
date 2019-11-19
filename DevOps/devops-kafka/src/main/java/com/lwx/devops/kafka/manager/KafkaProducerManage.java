@@ -24,6 +24,7 @@ public class KafkaProducerManage {
     private KafkaTemplate<String, Object> kafkaTemplate;
 
     public static final String TOPIC = "TOPIC_LOG_TEST";
+    public static final String TOPIC_S1_LOG = "s1-audit-log";//s1log
     @Autowired
     private Gson gson;
 

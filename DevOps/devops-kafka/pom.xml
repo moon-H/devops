@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>devops-kafka</artifactId>
-    <packaging>pom</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
@@ -25,6 +24,13 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.lwx.devops</groupId>
+            <artifactId>devops-elasticsearch</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>
