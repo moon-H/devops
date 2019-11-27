@@ -3,6 +3,9 @@ package es;
 import com.lwx.devops.elasticsearch.EsApplication;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest;
+import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
+import org.elasticsearch.action.admin.indices.analyze.DetailAnalyzeResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequest;
 import org.elasticsearch.action.get.MultiGetResponse;
@@ -23,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,7 +55,7 @@ public class ElasticSearchTest {
 
         try {
             IndexResponse indexResponse = getHighLvClient().index(indexRequest, RequestOptions.DEFAULT);
-            System.out.println("#### indexResponse "+indexResponse.toString());
+            System.out.println("#### indexResponse " + indexResponse.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,6 +63,21 @@ public class ElasticSearchTest {
 
     }
 
+
+    @Test
+    public void analyze() {
+        AnalyzeRequest request = new AnalyzeRequest();
+        request.text("Some text to analyze", "Some more text to analyze");
+        request.analyzer("english");
+        try {
+            AnalyzeResponse response = getHighLvClient().indices().analyze(request, RequestOptions.DEFAULT);
+            DetailAnalyzeResponse detail = response.detail();
+            List<AnalyzeResponse.AnalyzeToken> tokens=response.getTokens();
+            System.out.println("123");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void multiGet() {
