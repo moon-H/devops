@@ -1,6 +1,5 @@
 package es;
 
-import com.lwx.devops.elasticsearch.EsApplication;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest;
@@ -15,11 +14,8 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
-import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -35,7 +31,7 @@ import java.util.Map;
  * @create: 2019-10-04 12:09
  **/
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = EsApplication.class)
+//@SpringBootTest(classes = EsApplication.class)
 public class ElasticSearchTest {
 
     private static final String INDEX_KIBANA = "kibana_sample_data_ecommerce";

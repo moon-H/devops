@@ -19,7 +19,7 @@ import java.util.Map;
  * @author: liwx
  * @create: 2019-11-09 20:39
  **/
-@Configuration
+//@Configuration
 public class KafkaConsumerConfig {
     @Value("${kafka.bootstrap-servers}")
     private String servers;

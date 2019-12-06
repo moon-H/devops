@@ -1,4 +1,4 @@
-package com.lwx.devops.kafka.config;
+package com.lwx.devops.app.config;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;

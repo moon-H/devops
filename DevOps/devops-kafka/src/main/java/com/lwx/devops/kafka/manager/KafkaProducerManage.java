@@ -1,6 +1,5 @@
 package com.lwx.devops.kafka.manager;
 
-import com.google.gson.Gson;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +22,9 @@ public class KafkaProducerManage {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public static final String TOPIC = "TOPIC_LOG_TEST";
+//    public static final String TOPIC = "TOPIC_LOG_TEST";
+    public static final String TOPIC = "M0_LOG";
     public static final String TOPIC_S1_LOG = "s1-audit-log";//s1log
-    @Autowired
-    private Gson gson;
 
     @Async
     public void sendTopic() {

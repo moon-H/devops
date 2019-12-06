@@ -1,8 +1,11 @@
 package com.lwx.devops.elasticsearch;
 
+import com.alibaba.fastjson.JSONObject;
+import com.lwx.devops.elasticsearch.dao.IndexDao;
+import com.lwx.devops.elasticsearch.logsystem.JsonDataProcessor;
+import com.lwx.devops.elasticsearch.logsystem.SimpleBulkRequest;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
-import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequest;
 import org.elasticsearch.action.get.MultiGetResponse;
@@ -12,15 +15,17 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,15 +33,19 @@ import java.util.Map;
  * @author: liwx
  * @create: 2019-11-09 21:20
  **/
+@Component
 public class EsManager {
     private static Logger logger = LoggerFactory.getLogger(EsManager.class);
 
     private static final String INDEX_LION = "index_lion";
+    private static final String INDEX_LOG_SYS = "index_test_lwx";
     private static final String INDEX_GRAFANA_TEXT1 = "index_grafana_test1";
 
     String strDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
 
+    @Resource
+    IndexDao indexDao;
     public static void main(String[] args) {
         System.out.println("ES 测试开始");
         EsManager esManager = new EsManager();
@@ -158,5 +167,44 @@ public class EsManager {
     }
 
 
+    public void writeIndex(Object entity) {
+        logger.info("##### "+(indexDao==null));
+
+        logger.info("线程名------" + Thread.currentThread().getName());
+        SimpleBulkRequest bulkRequest = new SimpleBulkRequest();
+        String type = entity.getClass().getTypeName();
+        if("java.util.ArrayList".equals(type)){
+            List<JSONObject> list = (List<JSONObject>)entity;
+            for (JSONObject jsonObject : list) {
+                try {
+                    jsonObject = JsonDataProcessor.processData(jsonObject);
+                } catch (Exception e) {
+                    logger.error("数据处理异常： " + jsonObject.toJSONString(), e);
+                }
+                String cityCode = jsonObject.getString("cityCode");
+                IndexRequest indexRequest = new IndexRequest(INDEX_LOG_SYS).id(jsonObject.getString("id"))
+                        .source(jsonObject.toJSONString(), XContentType.JSON);
+                String routing = cityCode;
+                indexRequest.routing(routing);
+                bulkRequest.getDocIds().add(indexRequest.id());
+                bulkRequest.add(indexRequest);
+            }
+        } else {
+            JSONObject json = (JSONObject)entity;
+            try {
+                json = JsonDataProcessor.processData(json);
+            } catch (Exception e) {
+                logger.error("数据处理异常： " + json.toJSONString(), e);
+            }
+            String cityCode = json.getString("cityCode");
+            IndexRequest indexRequest = new IndexRequest(INDEX_LOG_SYS).id(System.currentTimeMillis() + "")
+                    .source(json.toJSONString(), XContentType.JSON);
+            String routing = cityCode;
+            indexRequest.routing(routing);
+            bulkRequest.getDocIds().add(indexRequest.id());
+            bulkRequest.add(indexRequest);
+        }
+        indexDao.bulk(bulkRequest);
+    }
 
 }

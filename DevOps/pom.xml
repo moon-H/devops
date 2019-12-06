@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lwx.devops</groupId>
+    <artifactId>devops-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>devops</name>
+    <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>devops-kafka</module>
         <module>devops-base</module>
         <module>devops-elasticsearch</module>
         <module>devops-common</module>
+        <module>devops-app</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -15,16 +25,6 @@
         <version>2.1.10.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.lwx.devops</groupId>
-    <artifactId>DevOps</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>DevOps</name>
-    <description>Demo project for Spring Boot</description>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,14 +40,19 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.6</version>
-            </dependency>
-            <dependency>
                 <groupId>com.lwx.devops</groupId>
                 <artifactId>devops-elasticsearch</artifactId>
                 <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lwx.devops</groupId>
+                <artifactId>devops-kafka</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.8.6</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -65,6 +70,13 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>7.2.1</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.9</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
