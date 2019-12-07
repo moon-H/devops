@@ -11,6 +11,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -35,6 +36,14 @@ public class LogSysConsume {
     IndexDao indexDao;
     @Resource
     EsManager esManager;
+    @Value("${kafka.topic.name}")
+    private String topicName;
+    @Value("${kafka.bootstrap-servers}")
+    private String bootstrapServers;
+    @Value("${kafka.consumer.group.id}")
+    private String groupId;
+    @Value("${kafka.consumer.auto.offset.reset}")
+    private String consumerAutoOffsetReset;
 
     public static void main(String[] args) {
 
@@ -66,15 +75,15 @@ public class LogSysConsume {
         System.out.printf(sdf.format(System.currentTimeMillis()) + "#############Start");
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.5.230:9092");
-        props.put("group.id", "test1");
+        props.put("bootstrap.servers", bootstrapServers);
+        props.put("group.id", groupId);
         props.put("enable.auto.commit", "false");
         props.put("auto.commit.interval.ms", "500");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, consumerAutoOffsetReset);
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList("M0_LOG"));
+        consumer.subscribe(Arrays.asList(topicName));
 //        consumer.subscribe(Arrays.asList("s1-audit-log"));
         while (true) {
             System.out.println(sdf.format(System.currentTimeMillis()) + "#######拉数据");

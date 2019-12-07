@@ -4,7 +4,7 @@
     <groupId>com.lwx.devops</groupId>
     <artifactId>devops-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>devops</name>
+    <name>devops-parent</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
 
@@ -81,14 +81,5 @@
         </dependencies>
     </dependencyManagement>
 
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

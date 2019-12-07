@@ -6,10 +6,10 @@
     <property name="FILE_LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] [%-5level] %message %logger [RID:%X{RID}] [TID:%X{TID}] [MID:%X{MID}]%n"/>
     
     <springProfile name="dev,test,lab">
-   		<substitutionProperty name="logbase" value="/usr/local/s6-user/logs/" />
+   		<substitutionProperty name="logbase" value="/usr/logsystem/logs/" />
      </springProfile>
      <springProfile name="prod">
-   		<substitutionProperty name="logbase" value="/usr/local/s6-user/logs/" />
+   		<substitutionProperty name="logbase" value="/usr/logsystem/logs/" />
    		<!--<substitutionProperty name="logbase" value="/opt/prod/M1/logs/" />-->
      </springProfile>
     <!-- 时间戳：
@@ -30,10 +30,10 @@
             <charset>utf8</charset>
         </encoder>
         <!-- 按照时间来 -->
-        <file>${logbase}user_server.log</file>
+        <file>${logbase}devops.log</file>
         <!--日志文件输出的文件名-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        	<FileNamePattern>${logbase}user_server.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+        	<FileNamePattern>${logbase}devops.log.%d{yyyy-MM-dd}.log</FileNamePattern>
         </rollingPolicy>
         <append>true</append>
 
@@ -44,7 +44,7 @@
 	
      <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
     <springProfile name="dev,test,lab">
-	  	<logger name="com.panchan" additivity="false">
+	  	<logger name="com.lwx" additivity="false">
 		    <level value="DEBUG" />
 		    <appender-ref ref="CONSOLE" />
 			<appender-ref ref="BUSINESS-FILE" />
@@ -77,7 +77,7 @@
     </springProfile>
      <!-- 生产环境. -->
     <springProfile name="prod">
-	  	<logger name="com.panchan" additivity="false">
+	  	<logger name="com.lwx" additivity="false">
 		    <level value="Info" />
 		    <appender-ref ref="CONSOLE" />
 			<appender-ref ref="BUSINESS-FILE" />
