@@ -23,7 +23,7 @@ public class KafkaProducerManage {
     private KafkaTemplate<String, Object> kafkaTemplate;
 
 //    public static final String TOPIC = "TOPIC_LOG_TEST";
-    public static final String TOPIC = "M0_LOG";
+    public static final String TOPIC = "s1-audit-log";
     public static final String TOPIC_S1_LOG = "s1-audit-log";//s1log
 
     @Async

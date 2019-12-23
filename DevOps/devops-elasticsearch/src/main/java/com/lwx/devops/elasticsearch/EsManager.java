@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class EsManager {
     private static Logger logger = LoggerFactory.getLogger(EsManager.class);
 
     private static final String INDEX_LION = "index_lion";
-    private static final String INDEX_LOG_SYS = "index_test_lwx";
+    private static final String INDEX_LOG_SYS = "log_info_test";
     private static final String INDEX_GRAFANA_TEXT1 = "index_grafana_test1";
 
     String strDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
@@ -46,6 +47,7 @@ public class EsManager {
 
     @Resource
     IndexDao indexDao;
+
     public static void main(String[] args) {
         System.out.println("ES 测试开始");
         EsManager esManager = new EsManager();
@@ -168,13 +170,13 @@ public class EsManager {
 
 
     public void writeIndex(Object entity) {
-        logger.info("##### "+(indexDao==null));
+        logger.info("##### " + (indexDao == null));
 
-        logger.info("线程名------" + Thread.currentThread().getName());
+        logger.info("线程[{}]", Thread.currentThread().getName());
         SimpleBulkRequest bulkRequest = new SimpleBulkRequest();
         String type = entity.getClass().getTypeName();
-        if("java.util.ArrayList".equals(type)){
-            List<JSONObject> list = (List<JSONObject>)entity;
+        if ("java.util.ArrayList".equals(type)) {
+            List<JSONObject> list = (List<JSONObject>) entity;
             for (JSONObject jsonObject : list) {
                 try {
                     jsonObject = JsonDataProcessor.processData(jsonObject);
@@ -190,7 +192,7 @@ public class EsManager {
                 bulkRequest.add(indexRequest);
             }
         } else {
-            JSONObject json = (JSONObject)entity;
+            JSONObject json = (JSONObject) entity;
             try {
                 json = JsonDataProcessor.processData(json);
             } catch (Exception e) {
@@ -205,6 +207,15 @@ public class EsManager {
             bulkRequest.add(indexRequest);
         }
         indexDao.bulk(bulkRequest);
+
+        List<Integer> costBeforeTax = Arrays.asList(100, 200, 300, 400, 500);
+        double total = 0;
+        for (Integer cost : costBeforeTax) {
+            double price = cost + .12*cost;
+            total = total + price;
+        }
+
+
     }
 
 }
