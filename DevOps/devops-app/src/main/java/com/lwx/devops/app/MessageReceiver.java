@@ -21,13 +21,12 @@ public class MessageReceiver implements ApplicationListener<ApplicationReadyEven
     private Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
     @Autowired
     LogSysConsume logSysConsume;
-
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
         logger.info("###启动完成");
 
-        logSysConsume.pullData();
+//        logSysConsume.pullData();
 //        logSysConsume.injectTest();
     }
 }

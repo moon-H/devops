@@ -21,6 +21,17 @@
             <groupId>com.lwx.devops</groupId>
             <artifactId>devops-elasticsearch</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lwx.devops</groupId>
+            <artifactId>devops-canal</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lwx.devops</groupId>
+            <artifactId>devops-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

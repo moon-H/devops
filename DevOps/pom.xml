@@ -18,6 +18,7 @@
         <module>devops-elasticsearch</module>
         <module>devops-common</module>
         <module>devops-app</module>
+        <module>devops-canal</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -47,6 +48,11 @@
             <dependency>
                 <groupId>com.lwx.devops</groupId>
                 <artifactId>devops-kafka</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lwx.devops</groupId>
+                <artifactId>devops-canal</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

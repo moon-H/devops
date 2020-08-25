@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  * @author: liwx
  * @create: 2019-11-27 16:19
  **/
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class ExceptionAspect {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final static String JOIN_POINT = "execution(public * com.huyan.demo.controller.AnalyticsController.*(..))";

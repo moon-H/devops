@@ -24,7 +24,6 @@ public class AppTestController {
 //    KafkaProducerManage kafkaProducerManage;
     @Resource
     PersionDao p;
-
     /**
      * kafka测试
      *

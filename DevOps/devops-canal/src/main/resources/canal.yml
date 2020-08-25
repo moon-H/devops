@@ -1,0 +1,9 @@
+canal:
+  host:
+  #instance名称
+  destanation: lwx_test
+  username: canal
+  password: canal
+  batchSize: 1000
+  subscribe: lwx_test\..*
+
